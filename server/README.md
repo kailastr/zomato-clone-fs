@@ -1,0 +1,8 @@
+# API PLANNING (schemas)
+- Food (food items and details)
+- Restaurant (restaurants and their details)
+- Menu (menu and its details)
+- Order (orders and its details)
+- Image (storing all the images related to the project)
+- Review (storing all the list of reviews)
+- User (User related details like UserName, email, password)
