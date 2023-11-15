@@ -14,4 +14,4 @@ export {
     RestaurantModel,
     ReviewModel,
     UserModel
-}
+};

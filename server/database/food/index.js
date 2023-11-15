@@ -26,4 +26,4 @@ const FoodSchema = new mongoose.Schema({
     timestamps: true //this second parameter is used to get the time whenever a new data is entered
 });
 
-export const FoodModel = mongoose.Model('foods', FoodSchema);
+export const FoodModel = mongoose.model('foods', FoodSchema);
