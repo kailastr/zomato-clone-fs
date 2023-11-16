@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
     {
         fullName: { type: String, required: true },
         email: { type: String, required: true },
-        password: String,
+        password: { type: String },
         address: [
             { details: { type: String }, for: { type: String } }
         ],
@@ -26,9 +26,9 @@ UserSchema.methods.generateJwtToken = function () {
 
 //statics are helper functions which is not attached to the schema
 //this function will be used in the time of signUp
-UserSchema.statics.findByEmailAndPhone = async ({ email, PhoneNum }) => {
+UserSchema.statics.findByEmailAndPhone = async ({ email, phoneNumber }) => {
     const checkUserByEmail = await UserModel.findOne({ email });
-    const checkUserByPhoneNum = await UserModel.findOne({ PhoneNum });
+    const checkUserByPhoneNum = await UserModel.findOne({ phoneNumber });
 
     if (checkUserByEmail || checkUserByPhoneNum) {
         throw new Error("User already exist with this Email or Phone Number !!");
@@ -38,14 +38,14 @@ UserSchema.statics.findByEmailAndPhone = async ({ email, PhoneNum }) => {
 
 //this function will be used at the time of Login and SignUp
 UserSchema.statics.findByEmailAndPassword = async ({ email, password }) => {
-    const findUserByEmail = await UserModel.findOne({ email });
-    if (!findUserByEmail) throw new Error("User doesn't found in this email-Id !!");
+    const user = await UserModel.findOne({ email });
+    if (!user) throw new Error("User doesn't found in this email-Id !!");
 
     //password comparing
     const doesPasswordMatch = await bcrypt.compare(password, user.password);
     if (!doesPasswordMatch) throw new Error("Invalid Password");
 
-    return findUserByEmail;
+    return user;
 };
 
 //data encryption while creating new data(user)
