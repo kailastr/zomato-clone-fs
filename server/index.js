@@ -1,5 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
+import passport from "passport";
+
+//for private route authorization config
+import privateRouteConfig from "./config/route.config";
 
 //database connection
 import ConnectDB from './database/connection';
@@ -11,7 +15,13 @@ dotenv.config();
 
 const zomato = express();
 
+//adding additional passport configuration
+privateRouteConfig(passport);
+
 zomato.use(express.json());
+
+//passport initialization
+zomato.use(passport.initialize());
 
 zomato.get('/', (req, res) => {
     res.json({
