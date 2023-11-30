@@ -10,6 +10,10 @@ import ConnectDB from './database/connection';
 
 //importing authentication page
 import Auth from './api/auth';
+// importing other routes
+import Food from './api/food';
+import Restaurant from './api/restaurant';
+import User from './api/user';
 
 dotenv.config();
 
@@ -31,6 +35,10 @@ zomato.get('/', (req, res) => {
 
 // the url will be as "/auth/signup"
 zomato.use('/auth', Auth);
+
+zomato.use('/food', Food);
+zomato.use('/restaurant', Restaurant);
+zomato.use('/user', passport.authenticate('jwt', { session: false }), User);
 
 const PORT = 4000;
 
