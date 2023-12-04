@@ -5,13 +5,23 @@ import { RestaurantModel } from '../../database/allModels'
 const Router = express.Router();
 
 /**
- * Route    
+ * Route    /createRestaurant
  * Desc     Create new Restaurant
- * Params
+ * Params   none
  * Access   Public
  * Method   POST
  */
 //HomeWork
+Router.post('/createRestaurant', async (req, res) => {
+    try {
+        const newRestaurant = RestaurantModel.create(req.body.RestaurantDetails);
+
+        return res.status(200).json({ status: "successfully added new Restaurant" });
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+});
 
 /**
  * Route    /
