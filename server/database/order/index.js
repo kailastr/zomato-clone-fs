@@ -19,7 +19,7 @@ const OrderSchema = new mongoose.Schema(
                 paymentDetails: {
                     itemTotal: { type: Number, required: true },
                     promo: { type: String, required: true },
-                    tax: { type: Number, requiered: true },
+                    tax: { type: String, requiered: true },
                     razorpay_payment_id: { type: String, required: true }
                 }
             }
