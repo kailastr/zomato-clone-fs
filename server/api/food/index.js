@@ -23,7 +23,7 @@ const Router = express.Router();
 Router.get('/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        const food = FoodModel.findById(_id);
+        const food = await FoodModel.findById(_id);
 
         return res.status(200).json({ food });
 
@@ -42,9 +42,13 @@ Router.get('/:_id', async (req, res) => {
 Router.get('/r/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        const foods = FoodModel.find({
+        const foods = await FoodModel.find({
             restaurants: _id
         });
+
+        if (foods.length === 0) {
+            return res.status(404).json({ message: "No restaurant found !!" });
+        }
 
         return res.status(200).json({ foods });
 
@@ -67,7 +71,7 @@ Router.get('/c/:category', async (req, res) => {
             category: { $regex: category, $options: "i" } //this method is used to get the category accurately using Regular Expression(regex used to check the given category name everywhere in the model) and options to check even without case sensitivity 
         });
 
-        if (!foods) {
+        if (foods.length === 0) {
             return res.status(404).json({ error: `Food not found using the ${category}` });
         }
 

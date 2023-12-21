@@ -32,7 +32,7 @@ Router.post('/createRestaurant', async (req, res) => {
  */
 Router.get('/', async (req, res) => {
     try {
-        //http://localhost:4000/restaurant/?city=kochi
+        //http://localhost:4000/restaurant/?city=Kochi
         //instead of passing values in parameters we could also pass values as quries as above to get values from this quries we could do as below
         const { city } = req.query;
         const restaurants = await RestaurantModel.find({ city });
@@ -59,7 +59,7 @@ Router.get('/', async (req, res) => {
 Router.get('/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
-        const restaurant = RestaurantModel.findById(_id);
+        const restaurant = await RestaurantModel.findById(_id);
 
         if (!restaurant) {
             return res.status(400).json({ error: 'Restaurant not found with this id!!' });
@@ -83,7 +83,7 @@ Router.get('/search/:searchString', async (req, res) => {
     //if we are searching for Raj then we should have to get every hotel contains Raj in them like RajHotel, RamrajHotel, HotelRajenthra ...
     try {
         const { searchString } = req.params;
-        const restaurants = RestaurantModel.find({
+        const restaurants = await RestaurantModel.find({
             name: { $regex: searchString, $options: 'i' }
         });
 
