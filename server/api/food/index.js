@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { FoodModel } from '../../database/allModels'
+import { validateCategory, validateId } from '../../validation/common.validation';
 
 const Router = express.Router();
 
@@ -23,6 +24,7 @@ const Router = express.Router();
 Router.get('/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
+        await validateId(req.params);
         const food = await FoodModel.findById(_id);
 
         return res.status(200).json({ food });
@@ -42,6 +44,7 @@ Router.get('/:_id', async (req, res) => {
 Router.get('/r/:_id', async (req, res) => {
     try {
         const { _id } = req.params;
+        await validateId(req.params);
         const foods = await FoodModel.find({
             restaurants: _id
         });
@@ -67,6 +70,10 @@ Router.get('/r/:_id', async (req, res) => {
 Router.get('/c/:category', async (req, res) => {
     try {
         const { category } = req.params;
+
+        //validate the category using joi
+        await validateCategory(req.params);
+
         const foods = await FoodModel.find({
             category: { $regex: category, $options: "i" } //this method is used to get the category accurately using Regular Expression(regex used to check the given category name everywhere in the model) and options to check even without case sensitivity 
         });

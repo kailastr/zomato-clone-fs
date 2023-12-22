@@ -45,7 +45,7 @@ Router.put('/new', passport.authenticate("jwt", { session: false }), async (req,
         const { user } = req;
 
         const { orderDetails } = req.body;
-
+        //task: validate orderDetails using joi
         const addNewOrder = await OrderModel.findOneAndUpdate(
             {
                 //this object says that we should have to update the user having this specific id

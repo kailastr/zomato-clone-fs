@@ -1,6 +1,7 @@
 import express from 'express';
 
 import { RestaurantModel } from '../../database/allModels'
+import { validateRestaurantCity, validateSearchString } from '../../validation/restaurant.validation';
 
 const Router = express.Router();
 
@@ -35,6 +36,8 @@ Router.get('/', async (req, res) => {
         //http://localhost:4000/restaurant/?city=Kochi
         //instead of passing values in parameters we could also pass values as quries as above to get values from this quries we could do as below
         const { city } = req.query;
+
+        await validateRestaurantCity(req.query);
         const restaurants = await RestaurantModel.find({ city });
 
         if (restaurants.length === 0) {
@@ -83,6 +86,8 @@ Router.get('/search/:searchString', async (req, res) => {
     //if we are searching for Raj then we should have to get every hotel contains Raj in them like RajHotel, RamrajHotel, HotelRajenthra ...
     try {
         const { searchString } = req.params;
+
+        await validateSearchString(req.params);
         const restaurants = await RestaurantModel.find({
             name: { $regex: searchString, $options: 'i' }
         });
