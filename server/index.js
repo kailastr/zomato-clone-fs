@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import passport from "passport";
+import session from "express-session";
 
 //for private route authorization config
 import privateRouteConfig from "./config/route.config";
+import googleAuthConfig from "./config/google.config";
 
 //database connection
 import ConnectDB from './database/connection';
@@ -22,14 +24,18 @@ import Image from './api/image';
 dotenv.config();
 
 const zomato = express();
+zomato.use(session({ secret: process.env.JWTSECRET }));
 
 //adding additional passport configuration
 privateRouteConfig(passport);
+googleAuthConfig(passport);
 
 zomato.use(express.json());
 
 //passport initialization
 zomato.use(passport.initialize());
+
+zomato.use(passport.session());
 
 zomato.get('/', (req, res) => {
     res.json({
