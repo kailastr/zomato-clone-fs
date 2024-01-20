@@ -1,3 +1,6 @@
 
 /server/node_modules
 /server/.env
+
+# we dont need to upload dist file because every time "npm run start" command runs, the dist is created
+/server/dist 
