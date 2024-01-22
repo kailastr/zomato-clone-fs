@@ -1,7 +1,7 @@
 # zomato-clone
 
-- server folder is for the backend side 
-- client folder is for the frontend side
+## server folder is for the backend side 
+## client folder is for the frontend side
 
 # To do
 1. api/order/index.js : validate OrderDetails using joi
