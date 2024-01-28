@@ -1,0 +1,19 @@
+.mySwiper .swiper-pagination {
+    position: relative;
+    bottom: 0px;
+}
+
+.swiper .swiper-button-prev,
+.swiper .swiper-button-next {
+    top: 50%;
+    background-color: white;
+    height: 35px;
+    width: 35px;
+    border-radius: 100%;
+}
+
+.swiper .swiper-button-prev::after,
+.swiper .swiper-button-next::after {
+    font-size: 15px;
+    font-weight: 900;
+}
