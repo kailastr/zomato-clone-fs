@@ -5,9 +5,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors:{
+      width: {
+        '90': '90%'
+      },
+      colors: {
         zomato: {
-           50: "#ffe5e7",
+          50: "#ffe5e7",
           100: "#fab5b9",
           200: "#f9848b",
           300: "#f9555d",

@@ -26,7 +26,7 @@ function App() {
         {/* <Route path='/restaurant/:id' element={< RedirectRestaurant />} /> */}
         <Route path='/google/:token' element={< GoogleAuth />} />
         {/* Creating subroutes for refreshing only the component without the whole page */}
-        <Route path='/restaurant/:id' element={<Restaurant />}>
+        <Route path='/restaurant/:_id' element={<Restaurant />}>
           <Route path='overview' element={< Overview />} />
           <Route path='order-online' element={< OrderOnline />} />
           <Route path='reviews' element={< Reviews />} />
