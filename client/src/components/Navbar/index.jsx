@@ -82,7 +82,7 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
                         />
                     </div>
                 </div>
-                <div className='w-3/4 bg-white shadow-md p-3 flex items-center gap-3 border border-gray-200'>
+                <div className='w-3/4 bg-white shadow-md p-3 flex items-center gap-3 border border-gray-200 rounded-2xl'>
                     <div className='flex items-center gap-2 border-r-2 border-gray-300 pr-2'>
                         <span className='text-zomato-400'>
                             <HiLocationMarker />
