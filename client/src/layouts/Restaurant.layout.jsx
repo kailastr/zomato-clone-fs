@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 //import icons
 import { TiStarOutline } from 'react-icons/ti'
 import { RiDirectionLine, RiShareForwardLine } from 'react-icons/ri'
@@ -7,27 +7,47 @@ import { BiBookmarkPlus } from 'react-icons/bi';
 
 //components import
 import Navbar from '../components/Navbar';
-// import ImageGrid from '../components/Restaurant/ImageGrid';
-// import InfoButton from '../components/Restaurant/InfoButton';
-// import ResturantInfo from '../components/Restaurant/RestaurantInfo';
-// import Tabs from '../components/Restaurant/Tabs';
-// import CartContainer from '../components/Cart/CartContainer';
+import ImageGrid from '../components/Restaurant/ImageGrid';
+import InfoButton from '../components/Restaurant/InfoButton';
+import ResturantInfo from '../components/Restaurant/ResturantInfo';
+import Tabs from '../components/Restaurant/Tabs';
+import CartContainer from '../components/Cart/CartContainer'
 
-const RestaurantLayout = (Component) => ({ ...props }) => {
+const RestaurantLayout = ({ children: Component, ...props }) => {
+
+    const [restaurant, setRestaurant] = useState({
+        images: [
+            {
+                location: "https://b.zmtcdn.com/data/pictures/3/18932783/2dd2f4c4850df432aa54e6959fa3fe8e.jpg"
+            },
+            {
+                location: "https://b.zmtcdn.com/data/pictures/3/18932783/17f7cd4c1c51946fc40defd47a5df2eb.jpg"
+            },
+            {
+                location: "https://b.zmtcdn.com/data/reviews_photos/353/9d3db683c79570f5e30050d87b43c353_1570790362.jpg"
+            },
+            {
+                location: "https://b.zmtcdn.com/data/pictures/4/18707294/5e9eb3b68de1deaf7590a17b414f017b.jpg"
+            },
+            {
+                location: "https://b.zmtcdn.com/data/pictures/7/20740447/aaebf1547278ff4852e8be706b2cb3fe_o2_featured_v2.jpg"
+            },
+        ],
+        name: "Hamza Non Veg Restaurant",
+        cuisine: ["North Indian", "Kebab", "Biryani"],
+        address: "Fort Kochi",
+        restaurantRating: 4.1,
+        deliveryRating: 3.2
+    });
+
+    const { id } = useParams();
+
     return (
         <>
             <Navbar />
-            <h1>RestaurantLayout</h1>
-            <Component {...props} />
-        </>
-    )
-}
-
-export default RestaurantLayout;
-
-{/* <div className='container mx-auto px-4 mt-8 lg:px-20 pb-20'>
-                 <ImageGrid images={ } /> 
-                <ResturantInfo name='' restaurantRating='' deliveryRating='' cuisine='' address='' />
+            <div className='container mx-auto px-4 mt-8 lg:px-20 pb-20'>
+                <ImageGrid images={restaurant.images} />
+                <ResturantInfo {...restaurant} />
                 <div className='my-4 flex flex-wrap gap-3 mx-auto'>
                     <InfoButton isActive='true'>
                         <TiStarOutline />Add Review
@@ -46,6 +66,13 @@ export default RestaurantLayout;
                 <div className='my-10'>
                     <Tabs />
                 </div>
-                <Component {...props} />
+                {Component}
             </div>
-            <CartContainer /> */}
+            <CartContainer />
+        </>
+    )
+}
+
+export default RestaurantLayout;
+
+{/*  */ }

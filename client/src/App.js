@@ -13,6 +13,7 @@ import Photos from './components/Restaurant/Photos';
 import OrderOnline from './components/Restaurant/OrderOnline'
 import Overview from './components/Restaurant/Overview';
 import Reviews from './components/Restaurant/Reviews'
+import RestaurantLayout from './layouts/Restaurant.layout';
 
 
 function App() {
@@ -26,7 +27,14 @@ function App() {
         {/* <Route path='/restaurant/:id' element={< RedirectRestaurant />} /> */}
         <Route path='/google/:token' element={< GoogleAuth />} />
         {/* Creating subroutes for refreshing only the component without the whole page */}
-        <Route path='/restaurant/:_id' element={<Restaurant />}>
+        <Route
+          path='/restaurant/:_id'
+          element={
+            <RestaurantLayout>
+              <Restaurant />
+            </RestaurantLayout>
+          }
+        >
           <Route path='overview' element={< Overview />} />
           <Route path='order-online' element={< OrderOnline />} />
           <Route path='reviews' element={< Reviews />} />
