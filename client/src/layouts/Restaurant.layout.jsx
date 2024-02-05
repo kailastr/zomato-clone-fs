@@ -63,7 +63,7 @@ const RestaurantLayout = ({ children: Component, ...props }) => {
                     </InfoButton>
                 </div>
 
-                <div className='my-10'>
+                <div className='my-10 sticky bg-white z-10 top-0 pt-2'>
                     <Tabs />
                 </div>
                 {Component}
