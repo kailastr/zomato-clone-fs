@@ -33,22 +33,29 @@ const Overview = () => {
 
   const [reviews, setReviews] = useState([]);
 
-  const [MenuImages, setMenuImages] = useState({ images: [] });
+  const [MenuImages, setMenuImages] = useState([
+    "https://b.zmtcdn.com/data/menus/089/95089/6191c39a52e8970e043d81c5d2b36986.jpg",
+    "https://b.zmtcdn.com/data/menus/089/95089/cc4d8bcc6de9d03de94f447ea85352eb.jpg",
+    "https://b.zmtcdn.com/data/menus/089/95089/2e06ae13ecad8d22daebb8b45a73595e.jpg",
+    "https://b.zmtcdn.com/data/menus/089/95089/1fca61d137d1f89e7a7c21219cc73282.jpg",
+    "https://b.zmtcdn.com/data/menus/089/95089/ff795044432f67eb87965069ff3d18ae.jpg"
+
+  ]);
 
   const sliderConfig = {
     slidesPerView: 1,
     spaceBetween: 10,
     breakpoints: {
       640: {
-        slidesPerView: 2,
+        slidesPerView: 1,
         spaceBetween: 20
       },
       780: {
-        slidesPerView: 3,
+        slidesPerView: 2,
         spaceBetween: 40
       },
       1024: {
-        slidesPerView: 4,
+        slidesPerView: 2,
         spaceBetween: 0
       }
     },
@@ -80,7 +87,7 @@ const Overview = () => {
           </div>
 
           <div className='flex flex-wrap gap-3 my-4'>
-            <MenuCollection menuTitle='Menu' pages={MenuImages.length} image={MenuImages} />
+            <MenuCollection menuTitle='Menu' pages={MenuImages.length} images={MenuImages} />
           </div>
 
           <h4 className='text-lg font-medium my-4'>Cuisine</h4>
@@ -114,7 +121,13 @@ const Overview = () => {
               <div>
                 <Swiper {...sliderConfig} >
                   <SwiperSlide >
-                    < MenuSimiliarRestaurant image='' title='' />
+                    < MenuSimiliarRestaurant image='https://b.zmtcdn.com/data/pictures/chains/4/95314/4d4117b9141372a273a7eafa997a2520_featured_v2.jpg' title='KFC' />
+                  </SwiperSlide>
+                  <SwiperSlide >
+                    < MenuSimiliarRestaurant image='https://b.zmtcdn.com/data/pictures/chains/6/20168266/e048b9c527ce1df3a5606ae04d4cbe14_featured_v2.jpg' title='AFC' />
+                  </SwiperSlide>
+                  <SwiperSlide >
+                    < MenuSimiliarRestaurant image='https://b.zmtcdn.com/data/pictures/9/20422239/4807ec92c2ce64c5463cc5a3a9303938_featured_v2.jpg' title='Amigo Brosted' />
                   </SwiperSlide>
                 </Swiper>
               </div>

@@ -38,3 +38,7 @@
 .diningSwiper .swiper-button-next {
     right: 5px;
 }
+
+#ReactSimpleImageViewer {
+    z-index: 100;
+}
