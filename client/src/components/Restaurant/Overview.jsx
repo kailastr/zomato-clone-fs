@@ -31,7 +31,20 @@ const Overview = () => {
     },
   ]);
 
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState([
+    {
+      rating: 3.9,
+      isRestaurantReview: true,
+      createdAt: "Sat Feb 17 2024 17:00:55 GMT+0530 (India Standard Time)",
+      reviewText: "Worth for money and great service"
+    },
+    {
+      rating: 4,
+      isRestaurantReview: false,
+      createdAt: "Sat Feb 15 2024 17:00:55 GMT+0530 (India Standard Time)",
+      reviewText: "Tasty food and friendly service"
+    }
+  ]);
 
   const [MenuImages, setMenuImages] = useState([
     "https://b.zmtcdn.com/data/menus/089/95089/6191c39a52e8970e043d81c5d2b36986.jpg",
@@ -93,7 +106,7 @@ const Overview = () => {
           <h4 className='text-lg font-medium my-4'>Cuisine</h4>
           <div className='flex flex-wrap gap-2'>
             {restaurant[0]?.cuisine?.map((cuisineName, index) => (
-              <span key={index} className='border border-gray-600 text-yellow-600 px-3 mx-1 py-1 rounded-full'>
+              <span key={index} className='border border-gray-600 text-yellow-600 px-3 mx-1 py-1 rounded-full hover:bg-gray-100 transition duration-200 ease-in-out cursor-pointer'>
                 {cuisineName}
               </span>
             ))}
@@ -111,6 +124,9 @@ const Overview = () => {
                 Rate your delivery experiece
               </h4>
               <ReactStars count={5} onChange={(newRating) => console.log(newRating)} size={24} activeColor='#ffd700' />
+              <h4 className='text-lg font-medium my-5'>
+                {restaurant[0].name} Reviews
+              </h4>
               {reviews.map((review, index) => (
                 <ReviewCard {...review} key={index} />
               ))}
@@ -144,11 +160,15 @@ const Overview = () => {
           </div>
         </div>
         {/* for larger screen view the map section will be as follow */}
-        <aside style={{ height: "fit-content" }} className='hidden md:flex md:w-4/12 sticky rounded-xl top-20 bg-white p-3 shadow-md flex-col gap-4'>
+        <aside
+          style={{ height: "fit-content" }}
+          className='hidden md:flex md:w-4/12 sticky rounded-xl top-20 bg-white p-4 shadow-md flex-col gap-4'
+        >
           <MapView
             title="Al Shaba"
             phno="+913954873534"
             mapLocation={getMapLatLong("10.014439843723636, 76.30030208581452")}
+            LatAndLong="10.014439843723636, 76.30030208581452"
             address="39/2957 B1, Stadium Link Road, Kaloor, Kochi"
           />
         </aside>
