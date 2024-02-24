@@ -5,7 +5,21 @@ import { HiLocationMarker } from 'react-icons/hi';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import { RiSearch2Line } from 'react-icons/ri';
 
-const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
+//component
+import Signin from '../Auth/Signin';
+import Signup from '../Auth/Signup';
+
+const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) => {
+
+    const SignIn = () => {
+        signIn();
+        setIsDropdownOpen(false);
+    }
+
+    const SignUp = () => {
+        signUp();
+        setIsDropdownOpen(false);
+    }
 
     return (
         <>
@@ -54,8 +68,8 @@ const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
                             {
                                 IsDropdownOpen && (
                                     <div className='absolute shadow-lg py-3 -bottom-24 -right-0 w-36 z-20 flex flex-col gap-2 bg-white border border-gray-200'>
-                                        <button>Sign In</button>
-                                        <button>Sign Up</button>
+                                        <button onClick={SignIn}>Sign In</button>
+                                        <button onClick={SignUp}>Sign Up</button>
                                     </div>
                                 )
                             }
@@ -69,7 +83,19 @@ const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
     )
 }
 
-const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
+const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) => {
+
+    //function to open the modal and also at the time to close the dropdown also
+    const SignIn = () => {
+        signIn();
+        setIsDropdownOpen(false);
+    }
+
+    const SignUp = () => {
+        signUp();
+        setIsDropdownOpen(false);
+    }
+
     return (
         <>
             <div className='container w-full items-center justify-between hidden lg:flex m-auto py-2 px-14'>
@@ -129,8 +155,8 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
                             {
                                 IsDropdownOpen && (
                                     <div className='absolute shadow-lg py-3 -bottom-24 -right-0 w-36 z-20 flex flex-col gap-2 bg-white border border-gray-200'>
-                                        <button>Sign In</button>
-                                        <button>Sign Up</button>
+                                        <button onClick={SignIn}>Sign In</button>
+                                        <button onClick={SignUp}>Sign Up</button>
                                     </div>
                                 )
                             }
@@ -146,18 +172,41 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen }) => {
 
 const Navbar = () => {
 
+    //for Modal working
+    const [openSignIn, setOpenSignIn] = useState(false);
+    const [openSignUp, setOpenSignUp] = useState(false);
+
+    const openSignInModal = () => setOpenSignIn(true);
+    const openSignUpModal = () => setOpenSignUp(true);
 
     const [IsDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const user = {
-        fullName: "Kailas"
+        fullName: ""
     };
 
     return (
         <>
+            {/* Sign in and singUp Modal */}
+            <Signin isOpen={openSignIn} setIsOpen={setOpenSignIn} />
+            <Signup isOpen={openSignUp} setIsOpen={setOpenSignUp} />
+
             <nav className='p-4 flex bg-white shadow-md lg:shadow-none w-full items-center'>
-                <MobileNavbar user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen} />
-                <LargeNav user={user} setIsDropdownOpen={setIsDropdownOpen} IsDropdownOpen={IsDropdownOpen} />
+                <MobileNavbar
+                    user={user}
+                    setIsDropdownOpen={setIsDropdownOpen}
+                    IsDropdownOpen={IsDropdownOpen}
+                    signIn={openSignInModal}
+                    signUp={openSignUpModal}
+                />
+
+                <LargeNav
+                    user={user}
+                    setIsDropdownOpen={setIsDropdownOpen}
+                    IsDropdownOpen={IsDropdownOpen}
+                    signIn={openSignInModal}
+                    signUp={openSignUpModal}
+                />
             </nav>
         </>
     )
