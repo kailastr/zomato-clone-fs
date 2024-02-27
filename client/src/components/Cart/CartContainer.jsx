@@ -35,7 +35,7 @@ const CartData = ({ toggle }) => {
 
     return (
         <>
-            <div className='flex items-center justify-start gap-5 p-2 rounded-md bg-zomato-50'>
+            <div className='flex items-center justify-start md:justify-between gap-5 py-2 px-3 rounded-md bg-zomato-50'>
                 <div className='flex flex-col items-start'>
                     <small className='flex items-center gap-1 cursor-pointer' onClick={toggle}>
                         {cart.length} Items <IoMdArrowDropup />
@@ -87,10 +87,10 @@ const CartContainer = () => {
             {cart.length &&
                 <>
                     {isOpen && (
-                        <div className='flex fixed w-full overflow-y-scroll h-48 bg-white z-10 p-2 bottom-14 px-3'>
+                        <div className='fixed w-full overflow-y-scroll h-48 bg-gray-100 z-50 p-2 bottom-14 px-3'>
                             <div className='flex items-center justify-between md:px-20'>
                                 <h3 className='text-xl font-semibold'>Your Orders</h3>
-                                <IoCloseSharp onClick={closeCart} />
+                                <IoCloseSharp onClick={closeCart} className='cursor-pointer' />
                             </div>
 
                             <hr className='my-2' />
@@ -104,7 +104,7 @@ const CartContainer = () => {
                     )}
 
                     <div className='fixed w-full bg-white z-10 p-2 bottom-0 ms-auto lg:px-20'>
-                        <CartData onClick={toggleCart} />
+                        <CartData toggle={toggleCart} />
                     </div>
                 </>
             }
