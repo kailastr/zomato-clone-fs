@@ -2,7 +2,11 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 //headless ui
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react';
+
+//redux
+import { useDispatch } from 'react-redux'; //to dispatch an action
+import { signIn } from '../../redux/reducers/auth/auth.action'; //import the action to be used
 
 const Signin = ({ isOpen, setIsOpen }) => {
 
@@ -19,7 +23,10 @@ const Signin = ({ isOpen, setIsOpen }) => {
         setIsOpen(false);
     }
 
-    const submit = () => {
+    const dispatch = useDispatch();
+
+    const submit = async () => {
+        await dispatch(signIn(userData));
         closeModal();
         setUserData({ email: "", password: "" })
     }

@@ -1,6 +1,6 @@
 //main entry point or storage of redux
 import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { thunk } from 'redux-thunk';
 
 import rootReducer from './reducers/rootReducer';
 
