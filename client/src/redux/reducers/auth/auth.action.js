@@ -25,3 +25,23 @@ export const signIn = (userData) => async (dispatch) => {
         return dispatch({ Type: "Error", payload: error });
     }
 }
+
+//signUp action
+export const signUp = (userData) => async (dispatch) => {
+    try {
+        const User = await axios({
+            method: "POST",
+            url: "http://localhost:4000/auth/signup",
+            data: { credentials: userData }
+        });
+
+        localStorage.setItem("zomatoUser", JSON.stringify({ token: User.data.token }));
+
+        // window.location.reload();
+
+        return dispatch({ type: SIGN_UP, payload: User.data });
+
+    } catch (error) {
+
+    }
+}

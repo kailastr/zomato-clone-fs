@@ -2,7 +2,11 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 //headless ui
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from 'react';
+
+//redux
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../redux/reducers/auth/auth.action';
 
 const Signup = ({ isOpen, setIsOpen }) => {
 
@@ -20,7 +24,10 @@ const Signup = ({ isOpen, setIsOpen }) => {
         setIsOpen(false);
     }
 
+    const dispatch = useDispatch();
+
     const submit = () => {
+        dispatch(signUp(userData));
         closeModal();
         setUserData({ email: "", password: "", fullName: "" })
     }
