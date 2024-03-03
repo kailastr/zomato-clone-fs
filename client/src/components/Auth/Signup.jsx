@@ -34,7 +34,7 @@ const Signup = ({ isOpen, setIsOpen }) => {
 
     //to redirect user for the google authenticaiton
     const googleSignUp = () => (
-        window.location.href = "https://localhost:4000/auth/google"
+        window.location.href = "http://localhost:4000/auth/google"
     )
 
     return (

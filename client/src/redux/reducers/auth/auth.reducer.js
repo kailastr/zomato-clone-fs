@@ -22,6 +22,12 @@ const authReducer = (state = initialState, action) => {
         case SIGN_OUT:
             return {} //if it is a signOut then empty the state
             break;
+        case GOOGLE_AUTH:
+            return {
+                ...state,
+                ...action.payload
+            };
+            break;
         default:
             return { ...state } //in the default case then we dont have to mention the state it will automatically updated
             break;
