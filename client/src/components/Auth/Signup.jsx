@@ -7,6 +7,7 @@ import { Fragment, useState } from 'react';
 //redux
 import { useDispatch } from 'react-redux';
 import { signUp } from '../../redux/reducers/auth/auth.action';
+import { getMySelf } from '../../redux/reducers/user/user.action';
 
 const Signup = ({ isOpen, setIsOpen }) => {
 
@@ -26,8 +27,9 @@ const Signup = ({ isOpen, setIsOpen }) => {
 
     const dispatch = useDispatch();
 
-    const submit = () => {
-        dispatch(signUp(userData));
+    const submit = async () => {
+        await dispatch(signUp(userData));
+        await dispatch(getMySelf());
         closeModal();
         setUserData({ email: "", password: "", fullName: "" })
     }

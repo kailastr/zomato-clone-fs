@@ -13,7 +13,7 @@ const userReducer = (state = initialState, action) => {
         case SELF:
             return {
                 ...state,
-                user: action.payload
+                ...action.payload
             }
         case CLEAR_USER:
             return {

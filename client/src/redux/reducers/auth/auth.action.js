@@ -16,6 +16,8 @@ export const signIn = (userData) => async (dispatch) => {
 
         localStorage.setItem("zomatoUser", JSON.stringify({ token: User.data.token }));
 
+        axios.defaults.headers.common["Authorization"] = `Bearer ${User.data.token}`; //set an Authorizaiton header for all the future request that this user made using axios to backend
+
         //to refresh the window after getting the data
         // window.location.reload();
 
@@ -37,6 +39,8 @@ export const signUp = (userData) => async (dispatch) => {
 
         localStorage.setItem("zomatoUser", JSON.stringify({ token: User.data.token }));
 
+        axios.defaults.headers.common["Authorization"] = `Bearer ${User.data.token}`;
+
         // window.location.reload();
 
         return dispatch({ type: SIGN_UP, payload: User.data });
@@ -50,7 +54,7 @@ export const signUp = (userData) => async (dispatch) => {
 export const signOut = () => async (dispatch) => {
     try {
         localStorage.removeItem("zomatoUser");
-        window.location.href = "http://localhost:3000";
+        //window.location.href = "http://localhost:3000"; --this will refresh our page. Instead we could redirect the page in the component's onclick funciton
 
         return dispatch({ type: SIGN_OUT, payload: {} })
     } catch (error) {
@@ -61,6 +65,8 @@ export const signOut = () => async (dispatch) => {
 export const googleAuth = (token) => async (dispatch) => {
     try {
         localStorage.setItem("zomatoUser", JSON.stringify({ token }));
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         return dispatch({ type: GOOGLE_AUTH, payload: { token } });
     } catch (error) {

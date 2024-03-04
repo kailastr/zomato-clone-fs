@@ -1,4 +1,5 @@
 import './App.css';
+import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 //import pages
@@ -15,8 +16,19 @@ import Overview from './components/Restaurant/Overview';
 import Reviews from './components/Restaurant/Reviews'
 import RestaurantLayout from './layouts/Restaurant.layout';
 
+//redux
+import { useDispatch } from 'react-redux';
+import { getMySelf } from './redux/reducers/user/user.action'
 
 function App() {
+
+  //since we want the user data all the time from the user log-in to log-out, we could set it in the app.js
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMySelf());
+  }, [localStorage]); //when ever the localstorage get updated, we want to run this fn
+
   return (
     <>
       <Routes>

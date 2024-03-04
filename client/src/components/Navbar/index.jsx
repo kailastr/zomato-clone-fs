@@ -1,13 +1,18 @@
 import React, { useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa';
 import { HiLocationMarker } from 'react-icons/hi';
-import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
+import { IoMdArrowDropdown } from 'react-icons/io';
 import { RiSearch2Line } from 'react-icons/ri';
 
 //component
 import Signin from '../Auth/Signin';
 import Signup from '../Auth/Signup';
+
+// redux
+import { useSelector, useDispatch } from 'react-redux'; //to select values from the redux
+import { signOut } from '../../redux/reducers/auth/auth.action'
+import { clearUser } from '../../redux/reducers/user/user.action';
 
 const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) => {
 
@@ -18,6 +23,16 @@ const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp 
 
     const SignUp = () => {
         signUp();
+        setIsDropdownOpen(false);
+    }
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const SignOut = () => {
+        dispatch(signOut());
+        dispatch(clearUser());
+        navigate('/delivery'); //to navigate to delivery page after signOut
         setIsDropdownOpen(false);
     }
 
@@ -52,7 +67,7 @@ const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp 
                             {
                                 IsDropdownOpen && (
                                     <div className='absolute shadow-lg py-3 -bottom-16 -right-0 w-36 z-20 flex flex-col gap-2 bg-white border border-gray-200'>
-                                        <button>Sign Out</button>
+                                        <button onClick={SignOut}>Sign Out</button>
                                     </div>
                                 )
                             }
@@ -93,6 +108,16 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) =
 
     const SignUp = () => {
         signUp();
+        setIsDropdownOpen(false);
+    }
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const SignOut = () => {
+        dispatch(signOut());
+        dispatch(clearUser());
+        navigate('/delivery');
         setIsDropdownOpen(false);
     }
 
@@ -139,7 +164,7 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) =
                             {
                                 IsDropdownOpen && (
                                     <div className='absolute shadow-lg py-3 -bottom-16 -right-0 w-36 z-20 flex flex-col gap-2 bg-white border border-gray-200'>
-                                        <button>Sign Out</button>
+                                        <button onClick={SignOut}>Sign Out</button>
                                     </div>
                                 )
                             }
@@ -181,9 +206,11 @@ const Navbar = () => {
 
     const [IsDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const user = {
-        fullName: ""
-    };
+    // const user = {
+    //     fullName: ""
+    // };
+
+    const user = useSelector((globalState) => globalState.user); //global state represents the whole redux storage
 
     return (
         <>
