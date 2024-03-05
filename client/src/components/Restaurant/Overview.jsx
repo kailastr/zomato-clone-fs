@@ -15,21 +15,26 @@ import MenuSimiliarRestaurant from './MenuSimiliarRestaurant';
 import ReviewCard from '../Reviews/ReviewCard';
 import MapView from './MapView';
 
+// redux
+import { useSelector } from 'react-redux';
+
 const Overview = () => {
 
   const { id } = useParams();
 
-  const [restaurant, setRestaurant] = useState([
-    {
-      _id: "123hdsfjh987Kkjhd",
-      isPro: true,
-      isOff: true,
-      name: "Mehfil Biriyani",
-      restaurantReviewValue: "4.1",
-      cuisine: ["Biryani", "Kerala", "South Indian", "Arabian", "Shake", "Juices"],
-      averageCost: "150"
-    },
-  ]);
+  // const restaurant = useSelector()
+  const restaurant = {
+    _id: "",
+    isPro: true,
+    isOff: true,
+    name: "",
+    restaurantReviewValue: "",
+    cuisine: [],
+    averageCost: "150"
+  };
+
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedSpecificRestaurant);
+  console.log("Global State", reduxState);
 
   const [reviews, setReviews] = useState([
     {
@@ -105,7 +110,7 @@ const Overview = () => {
 
           <h4 className='text-lg font-medium my-4'>Cuisine</h4>
           <div className='flex flex-wrap gap-2'>
-            {restaurant[0]?.cuisine?.map((cuisineName, index) => (
+            {restaurant?.cuisine?.map((cuisineName, index) => (
               <span key={index} className='border border-gray-600 text-yellow-600 px-3 mx-1 py-1 rounded-full hover:bg-gray-100 transition duration-200 ease-in-out cursor-pointer'>
                 {cuisineName}
               </span>
@@ -114,7 +119,7 @@ const Overview = () => {
 
           <div className='my-4'>
             <h4 className='text-lg font-medium'>Average Cost</h4>
-            <h6>₹ {restaurant[0].averageCost}</h6>
+            <h6>₹ {restaurant.averageCost}</h6>
             <small className='text-gray-500'>Exclusive of applicable taxes and charges, if any</small>
           </div>
 
@@ -125,7 +130,7 @@ const Overview = () => {
               </h4>
               <ReactStars count={5} onChange={(newRating) => console.log(newRating)} size={24} activeColor='#ffd700' />
               <h4 className='text-lg font-medium my-5'>
-                {restaurant[0].name} Reviews
+                {restaurant.name} Reviews
               </h4>
               {reviews.map((review, index) => (
                 <ReviewCard {...review} key={index} />
@@ -177,4 +182,17 @@ const Overview = () => {
   )
 }
 
-export default Overview
+export default Overview;
+
+// restaurant dummy data
+// const [restaurant, setRestaurant] = useState([
+//   {
+//     _id: "123hdsfjh987Kkjhd",
+//     isPro: true,
+//     isOff: true,
+//     name: "Mehfil Biriyani",
+//     restaurantReviewValue: "4.1",
+//     cuisine: ["Biryani", "Kerala", "South Indian", "Arabian", "Shake", "Juices"],
+//     averageCost: "150"
+//   },
+// ]);

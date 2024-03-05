@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AiTwotoneStar } from 'react-icons/ai'
+
+//redux
+import { useDispatch } from 'react-redux';
+import { getImage } from '../redux/reducers/image/image.action'
 
 const RestaurantCard = (props) => {
 
     const [image, setImage] = useState({
-        images: [
-            {
-                location: "https://b.zmtcdn.com/data/pictures/6/19008406/2137031075da5e1625f5e0ebc54fb78f_o2_featured_v2.jpeg"
-            },
-        ]
+        images: []
     });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getImage(props.photos)).then((data) => {
+            const images = data.payload.images;
+            setImage((prev) => ({ ...prev, images }));
+        });
+    }, [props.photos]); //only work this use effect it props have photos in it
 
     return (
         <Link

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 //import layout
@@ -10,8 +10,19 @@ import Dining from '../components/Dining';
 import NightLife from '../components/NightLife';
 import Nutrition from '../components/Nutrition';
 
+//redux
+import { useDispatch } from 'react-redux';
+import { getRestaurant } from '../redux/reducers/restaurant/restaurant.action'
+
 const Home = () => {
     const { type } = useParams();
+
+    const dispatch = useDispatch();
+
+    //this funciton will help us to get all the restaurant details and could use this to get the restaurants details
+    useEffect(() => {
+        dispatch(getRestaurant());
+    }, []);
 
     return (
         <div className='my-5 sm:mb-32'>
