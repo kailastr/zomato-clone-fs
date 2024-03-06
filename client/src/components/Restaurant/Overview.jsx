@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { IoMdArrowDropright } from 'react-icons/io';
 import ReactStars from 'react-rating-stars-component';
@@ -16,49 +16,48 @@ import ReviewCard from '../Reviews/ReviewCard';
 import MapView from './MapView';
 
 // redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getSpecificRestaurant } from '../../redux/reducers/restaurant/restaurant.action';
+import { getImage } from '../../redux/reducers/image/image.action';
+import { getReview } from '../../redux/reducers/review/review.action';
 
 const Overview = () => {
 
-  const { id } = useParams();
+  const dispatch = useDispatch();
+  const { _id } = useParams();
 
   // const restaurant = useSelector()
-  const restaurant = {
-    _id: "",
-    isPro: true,
-    isOff: true,
-    name: "",
-    restaurantReviewValue: "",
+  const [restaurant, setRestaurant] = useState({
     cuisine: [],
-    averageCost: "150"
-  };
+  });
 
-  const reduxState = useSelector((globalState) => globalState.restaurant.selectedSpecificRestaurant);
-  console.log("Global State", reduxState);
+  const [reviews, setReviews] = useState([]);
 
-  const [reviews, setReviews] = useState([
-    {
-      rating: 3.9,
-      isRestaurantReview: true,
-      createdAt: "Sat Feb 17 2024 17:00:55 GMT+0530 (India Standard Time)",
-      reviewText: "Worth for money and great service"
-    },
-    {
-      rating: 4,
-      isRestaurantReview: false,
-      createdAt: "Sat Feb 15 2024 17:00:55 GMT+0530 (India Standard Time)",
-      reviewText: "Tasty food and friendly service"
-    }
-  ]);
+  const [MenuImages, setMenuImages] = useState([]);
 
-  const [MenuImages, setMenuImages] = useState([
-    "https://b.zmtcdn.com/data/menus/089/95089/6191c39a52e8970e043d81c5d2b36986.jpg",
-    "https://b.zmtcdn.com/data/menus/089/95089/cc4d8bcc6de9d03de94f447ea85352eb.jpg",
-    "https://b.zmtcdn.com/data/menus/089/95089/2e06ae13ecad8d22daebb8b45a73595e.jpg",
-    "https://b.zmtcdn.com/data/menus/089/95089/1fca61d137d1f89e7a7c21219cc73282.jpg",
-    "https://b.zmtcdn.com/data/menus/089/95089/ff795044432f67eb87965069ff3d18ae.jpg"
+  useEffect(() => {
+    dispatch(getSpecificRestaurant(_id)).then((data) => {
+      setRestaurant((prev) => ({
+        ...prev,
+        ...data.payload.restaurant
+      }));
+    })
+  }, [setRestaurant]);
 
-  ]);
+  const MenuImageId = restaurant.menuImages;
+
+  useEffect(() => {
+    dispatch(getImage(MenuImageId)).then((data) => {
+      const images = []; //an array to store only images
+      data.payload.images.map(({ location }) => images.push(location));
+      // console.log("images ",images);
+      setMenuImages(images);
+    });
+  }, []);
+
+  // const reduxState = useSelector((globalState) => globalState.restaurant.selectedSpecificRestaurant);
+  // console.log("Global State", reduxState);
+
 
   const sliderConfig = {
     slidesPerView: 1,
@@ -97,7 +96,7 @@ const Overview = () => {
 
           <div className='flex justify-between items-center'>
             <h4 className='text-lg font-medium'>Menu</h4>
-            <Link to={`/restaurant/${id}/menu`} >
+            <Link to={`/restaurant/${_id}/menu`} >
               <span className='flex item-center gap-2 text-zomato-400 '>
                 See all Menu <IoMdArrowDropright />
               </span>
@@ -196,3 +195,25 @@ export default Overview;
 //     averageCost: "150"
 //   },
 // ]);
+
+//Review usestate dummy data
+// {
+//   rating: 3.9,
+//   isRestaurantReview: true,
+//   createdAt: "Sat Feb 17 2024 17:00:55 GMT+0530 (India Standard Time)",
+//   reviewText: "Worth for money and great service"
+// },
+// {
+//   rating: 4,
+//   isRestaurantReview: false,
+//   createdAt: "Sat Feb 15 2024 17:00:55 GMT+0530 (India Standard Time)",
+//   reviewText: "Tasty food and friendly service"
+// }
+
+// menu images usestate dummy data
+
+// "https://b.zmtcdn.com/data/menus/089/95089/6191c39a52e8970e043d81c5d2b36986.jpg",
+// "https://b.zmtcdn.com/data/menus/089/95089/cc4d8bcc6de9d03de94f447ea85352eb.jpg",
+// "https://b.zmtcdn.com/data/menus/089/95089/2e06ae13ecad8d22daebb8b45a73595e.jpg",
+// "https://b.zmtcdn.com/data/menus/089/95089/1fca61d137d1f89e7a7c21219cc73282.jpg",
+// "https://b.zmtcdn.com/data/menus/089/95089/ff795044432f67eb87965069ff3d18ae.jpg"
