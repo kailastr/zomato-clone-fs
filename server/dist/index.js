@@ -4,6 +4,8 @@ var _express = _interopRequireDefault(require("express"));
 var _dotenv = _interopRequireDefault(require("dotenv"));
 var _passport = _interopRequireDefault(require("passport"));
 var _expressSession = _interopRequireDefault(require("express-session"));
+var _cors = _interopRequireDefault(require("cors"));
+var _helmet = _interopRequireDefault(require("helmet"));
 var _route = _interopRequireDefault(require("./config/route.config"));
 var _google = _interopRequireDefault(require("./config/google.config"));
 var _connection = _interopRequireDefault(require("./database/connection"));
@@ -16,6 +18,8 @@ var _order = _interopRequireDefault(require("./api/order"));
 var _review = _interopRequireDefault(require("./api/review"));
 var _image = _interopRequireDefault(require("./api/image"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+//to connect with frontend
+
 //for private route authorization config
 
 //database connection
@@ -33,6 +37,10 @@ zomato.use((0, _expressSession.default)({
 //adding additional passport configuration
 (0, _route.default)(_passport.default);
 (0, _google.default)(_passport.default);
+zomato.use((0, _cors.default)({
+  origin: "http://localhost:3000"
+}));
+zomato.use((0, _helmet.default)());
 zomato.use(_express.default.json());
 
 //passport initialization

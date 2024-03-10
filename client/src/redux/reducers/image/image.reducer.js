@@ -11,7 +11,6 @@ const imageReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
-            break;
 
         default:
             return { ...state }

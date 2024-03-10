@@ -26,37 +26,33 @@ const Overview = () => {
   const dispatch = useDispatch();
   const { _id } = useParams();
 
-  // const restaurant = useSelector()
   const [restaurant, setRestaurant] = useState({
     cuisine: [],
   });
-
   const [reviews, setReviews] = useState([]);
-
   const [MenuImages, setMenuImages] = useState([]);
 
-  useEffect(() => {
-    dispatch(getSpecificRestaurant(_id)).then((data) => {
-      setRestaurant((prev) => ({
-        ...prev,
-        ...data.payload.restaurant
-      }));
-    })
-  }, [setRestaurant]);
-
-  const MenuImageId = restaurant.menuImages;
+  const reduxState = useSelector((globalState) => globalState.restaurant.selectedRestaurant);
 
   useEffect(() => {
-    dispatch(getImage(MenuImageId)).then((data) => {
-      const images = []; //an array to store only images
-      data.payload.images.map(({ location }) => images.push(location));
-      // console.log("images ",images);
-      setMenuImages(images);
-    });
-  }, []);
+    if (reduxState) {
+      setRestaurant(reduxState.restaurant);
+    }
+  }, [reduxState]);
 
-  // const reduxState = useSelector((globalState) => globalState.restaurant.selectedSpecificRestaurant);
-  // console.log("Global State", reduxState);
+  useEffect(() => {
+    if (reduxState) {
+      dispatch(getImage(reduxState?.restaurant.menuImages)).then((data) => {
+        const images = data?.payload?.images ? data.payload.images.map(({ location }) => location) : [];
+        setMenuImages(images);
+      });
+
+      dispatch(getReview(reduxState.restaurant?._id)).then((data) => {
+        const reviewArr = data?.payload?.reviews ? data.payload.reviews.map((items) => items) : [];
+        setReviews(reviewArr);
+      })
+    }
+  }, [reduxState]);
 
 
   const sliderConfig = {
@@ -109,7 +105,7 @@ const Overview = () => {
 
           <h4 className='text-lg font-medium my-4'>Cuisine</h4>
           <div className='flex flex-wrap gap-2'>
-            {restaurant?.cuisine?.map((cuisineName, index) => (
+            {restaurant?.cuisine.map((cuisineName, index) => (
               <span key={index} className='border border-gray-600 text-yellow-600 px-3 mx-1 py-1 rounded-full hover:bg-gray-100 transition duration-200 ease-in-out cursor-pointer'>
                 {cuisineName}
               </span>

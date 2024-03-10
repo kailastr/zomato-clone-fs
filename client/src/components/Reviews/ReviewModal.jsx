@@ -3,7 +3,11 @@ import { useParams } from 'react-router-dom';
 import { Dialog, Transition } from '@headlessui/react';
 import Rating from 'react-rating-stars-component';
 
-const ReviewModal = ({ isOpen, setIsOpen, type, ...props }) => {
+//redux
+import { useDispatch } from 'react-redux'
+import { postReview } from '../../redux/reducers/review/review.action';
+
+const ReviewModal = ({ isOpen, setIsOpen, type }) => {
 
     const [reviewData, setReviewData] = useState(
         {
@@ -14,6 +18,8 @@ const ReviewModal = ({ isOpen, setIsOpen, type, ...props }) => {
             rating: 0
         }
     );
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (type === "dining") {
@@ -32,7 +38,7 @@ const ReviewModal = ({ isOpen, setIsOpen, type, ...props }) => {
         }
     }, [type])
 
-    const { id } = useParams();
+    const { _id } = useParams();
 
     //to update the values in the reviewData
     const handleChange = (event) => {
@@ -62,11 +68,17 @@ const ReviewModal = ({ isOpen, setIsOpen, type, ...props }) => {
             ...prev,
             isRestaurantReview: false,
             isFoodReview: !prev.isFoodReview,
-        }))
-    }
+        }));
+    };
+
+
+    const closeModal = () => {
+        setIsOpen(false);
+    };
 
     //function to submit the modal
     const submit = () => {
+        dispatch(postReview({ ...reviewData, restaurants: _id }));
         closeModal();
 
         setReviewData({
@@ -75,12 +87,9 @@ const ReviewModal = ({ isOpen, setIsOpen, type, ...props }) => {
             isRestaurantReview: false,
             isFoodReview: false,
             rating: 0
-        })
+        });
     };
 
-    const closeModal = () => {
-        setIsOpen(false);
-    }
 
     return (
         <>

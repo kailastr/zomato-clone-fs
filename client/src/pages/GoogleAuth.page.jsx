@@ -14,6 +14,7 @@ const GoogleAuth = () => {
     useEffect(() => {
         if (token) {
             dispatch(googleAuth(token)).then(() => navigate('/delivery'));
+            
         }
     }, [token])
 

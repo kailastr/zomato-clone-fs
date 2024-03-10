@@ -19,7 +19,7 @@ const RestaurantCard = (props) => {
             const images = data.payload.images;
             setImage((prev) => ({ ...prev, images }));
         });
-    }, [props.photos]); //only work this use effect it props have photos in it
+    }, [props.photos]); //only work this use effect it props have photos id in it
 
     return (
         <Link

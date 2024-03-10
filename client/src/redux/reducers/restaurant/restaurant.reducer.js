@@ -10,15 +10,13 @@ const restaurantReducer = (state = initialState, action) => {
         case GET_RESTAURANT:
             return {
                 ...state,
-                restaurants: [...action.payload]
-            }
-            break;
+                restaurants: {...action.payload}
+            };
         case GET_SPECIFIC_RESTAURANT:
             return {
                 ...state,
-                selectedSpecificRestaurant: { ...action.payload }
-            }
-            break;
+                selectedRestaurant: {...action.payload}
+            };
 
         default:
             return {}

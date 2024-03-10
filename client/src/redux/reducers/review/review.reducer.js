@@ -1,7 +1,9 @@
 import { GET_REVIEW, POST_REVIEW } from './review.type';
 
 const initialState = {
-    reviews: []
+    reviews: {
+        reviews: [],
+    }
 };
 
 const reviewReducer = (state = initialState, action) => {
@@ -9,20 +11,17 @@ const reviewReducer = (state = initialState, action) => {
         case GET_REVIEW:
             return {
                 ...state,
-                review: action.payload
+                reviews: action.payload
             };
-            break;
 
         case POST_REVIEW:
             return {
                 ...state,
-                reviews: [action.payload, ...state.reviews] //add action.payload in the reviews section
-            }
-            break;
+                reviews: [action.payload, ...state.reviews.reviews] //add action.payload in the reviews section
+            };
 
         default:
             return { ...state };
-            break;
     }
 }
 

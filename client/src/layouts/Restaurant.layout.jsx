@@ -37,8 +37,10 @@ const RestaurantLayout = ({ children: Component, ...props }) => {
                 ...prev,
                 ...data.payload.restaurant
             }));
-            //console.log("data :", data.payload.restaurant.photos);
-            dispatch(getImage(data.payload.restaurant.photos)).then((data) => {
+            
+            console.log(restaurant);
+
+            dispatch(getImage(data.payload?.restaurant?.photos)).then((data) => {
                 setRestaurant((prev) => ({
                     ...prev,
                     images: data.payload.images

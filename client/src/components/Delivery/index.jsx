@@ -11,10 +11,13 @@ const Delivery = () => {
 
     const [restaurantList, setRestaurantList] = useState([]);
 
-    const reduxState = useSelector((globalState) => globalState.restaurant.restaurants)
+    const reduxState = useSelector((globalState) => globalState.restaurant.restaurants);
 
     useEffect(() => {
-        reduxState && setRestaurantList(reduxState);
+        if (reduxState) {
+            const restaurantArray = Object.values(reduxState); // Convert object to array
+            setRestaurantList(restaurantArray);
+        }
     }, [reduxState]);
 
     return (
@@ -25,7 +28,7 @@ const Delivery = () => {
             </h1>
             <div className='grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4'>
                 {
-                    restaurantList.map((restaurant) => (
+                    restaurantList?.map((restaurant) => (
                         <RestaurantCard {...restaurant} key={restaurant._id} />
                     ))
                 }
