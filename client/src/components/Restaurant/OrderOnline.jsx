@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlineCompass } from 'react-icons/ai';
 import { BiTimeFive } from 'react-icons/bi';
 
@@ -7,57 +7,27 @@ import FloatMenuBtn from '../OrderOnline/FloatMenuBtn';
 import FoodList from '../OrderOnline/FoodList';
 import MenuListContainer from '../OrderOnline/MenuListContainer';
 
+//redux
+import { useSelector, useDispatch } from 'react-redux'
+import { getFoodList } from '../../redux/reducers/food/food.action';
+
 const OrderOnline = () => {
 
-    const [menu, setMenu] = useState([
-        {
-            name: "Mandi",
-            items: [
-                {
-                    image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
-                    name: "Chicken Mandhi Spicy",
-                    rating: 4.5,
-                    price: 219,
-                    description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices"
-                },
-                {
-                    image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
-                    name: "Al Faham Mandi Quarter",
-                    rating: 3.5,
-                    price: 249,
-                    description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste."
-                },
-                {
-                    image: "https://b.zmtcdn.com/data/dish_photos/6af/fe7d03f7831815bf84e3bb8329d796af.jpg",
-                    name: "Al Faham Chicken Kanthari Mandi",
-                    rating: 4.5,
-                    price: 249,
-                    description: "Al faham chicken kanthari mandi is a spicy grilled chicken dish from Kerala"
-                }
-            ]
-        },
-        {
-            name: "Al Faham Kuboos Combos",
-            items: [
-                {
-                    image: "https://b.zmtcdn.com/data/dish_photos/f82/dc635ea14d5d63b4714c54740141ff82.jpg?fit=around|130:130&crop=130:130;*,*",
-                    name: "Al Faham Chicken with Kuboos",
-                    rating: 3,
-                    price: 169,
-                    description: "Al faham chicken with kuboos is a delicious Middle Eastern dish consisting of grilled marinated chicken,"
-                },
-                {
-                    image: "https://b.zmtcdn.com/data/dish_photos/da8/2fb458ddce4a27797000043645fa4da8.jpg?fit=around|130:130&crop=130:130;*,*",
-                    name: "Kanthari Chicken Al Faham with Kuboos",
-                    rating: 4.5,
-                    price: 169,
-                    description: "Kanthari chicken al faham is a spicy and flavourful grilled chicken dish served with traditional Arabic bread called kuboos"
-                }
-            ]
-        },
-    ]);
+    const [menu, setMenu] = useState([]);
 
     const [selected, setSelected] = useState("");
+
+    const dispatch = useDispatch();
+
+    const restaurant = useSelector((globalState) => globalState.restaurant?.selectedRestaurant?.restaurant);
+
+    useEffect(() => {
+        if (restaurant) {
+            dispatch(getFoodList(restaurant.menu)).then((data) => {
+                setMenu(data.payload.menus.menus);
+            })
+        }
+    }, [restaurant]);
 
     const onClickHandler = (e) => {
         if (e.target.id) {
@@ -89,7 +59,8 @@ const OrderOnline = () => {
                         </h4>
                     </div>
                     <section className='flex overflow-y-screen flex-col gap-3 md:gap-5'>
-                        {menu.map((item, index) => (
+                        {menu.map((item, index) => 
+                        (
                             <FoodList key={index} {...item} target={index} />
                         ))}
                     </section>
@@ -105,3 +76,50 @@ const OrderOnline = () => {
 }
 
 export default OrderOnline
+
+//set menu dummy data
+// {
+//     name: "Mandi",
+//     items: [
+//         {
+//             image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
+//             name: "Chicken Mandhi Spicy",
+//             rating: 4.5,
+//             price: 219,
+//             description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices"
+//         },
+//         {
+//             image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
+//             name: "Al Faham Mandi Quarter",
+//             rating: 3.5,
+//             price: 249,
+//             description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste."
+//         },
+//         {
+//             image: "https://b.zmtcdn.com/data/dish_photos/6af/fe7d03f7831815bf84e3bb8329d796af.jpg",
+//             name: "Al Faham Chicken Kanthari Mandi",
+//             rating: 4.5,
+//             price: 249,
+//             description: "Al faham chicken kanthari mandi is a spicy grilled chicken dish from Kerala"
+//         }
+//     ]
+// },
+// {
+//     name: "Al Faham Kuboos Combos",
+//     items: [
+//         {
+//             image: "https://b.zmtcdn.com/data/dish_photos/f82/dc635ea14d5d63b4714c54740141ff82.jpg?fit=around|130:130&crop=130:130;*,*",
+//             name: "Al Faham Chicken with Kuboos",
+//             rating: 3,
+//             price: 169,
+//             description: "Al faham chicken with kuboos is a delicious Middle Eastern dish consisting of grilled marinated chicken,"
+//         },
+//         {
+//             image: "https://b.zmtcdn.com/data/dish_photos/da8/2fb458ddce4a27797000043645fa4da8.jpg?fit=around|130:130&crop=130:130;*,*",
+//             name: "Kanthari Chicken Al Faham with Kuboos",
+//             rating: 4.5,
+//             price: 169,
+//             description: "Kanthari chicken al faham is a spicy and flavourful grilled chicken dish served with traditional Arabic bread called kuboos"
+//         }
+//     ]
+// },

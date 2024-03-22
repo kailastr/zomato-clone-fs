@@ -10,7 +10,7 @@ import { signIn } from '../../redux/reducers/auth/auth.action'; //import the act
 import { getMySelf } from '../../redux/reducers/user/user.action'
 
 const Signin = ({ isOpen, setIsOpen }) => {
-
+    
     const [userData, setUserData] = useState({
         email: "",
         password: ""

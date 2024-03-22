@@ -27,7 +27,7 @@ Router.get('/:_id', async (req, res) => {
             image
         });
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        return res.json({ error: error.message });
     }
 });
 
