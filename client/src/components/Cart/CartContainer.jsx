@@ -1,33 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IoCloseSharp } from 'react-icons/io5';
 import { IoMdArrowDropup, IoMdArrowDropright } from 'react-icons/io'
 import { useNavigate } from 'react-router-dom';
+
+//redux
+import { useSelector, useDispatch } from 'react-redux'
 
 //component
 import FoodItem from './FoodItem';
 
 const CartData = ({ toggle }) => {
 
-    const [cart, setCart] = useState([
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
-            name: "Chicken Mandhi Spicy",
-            rating: 4.5,
-            price: 200,
-            description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices",
-            quantity: 2,
-            totalPrice: 400
-        },
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
-            name: "Al Faham Mandi Quarter",
-            rating: 3.5,
-            price: 250,
-            description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste.",
-            quantity: 3,
-            totalPrice: 750
-        }
-    ]);
+    const cart = useSelector((globalState) => globalState.cart.cart);
 
     const navigate = useNavigate();
 
@@ -58,26 +42,7 @@ const CartContainer = () => {
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const [cart, setCart] = useState([
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
-            name: "Chicken Mandhi Spicy",
-            rating: 4.5,
-            price: 200,
-            description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices",
-            quantity: 2,
-            totalPrice: 400
-        },
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
-            name: "Al Faham Mandi Quarter",
-            rating: 3.5,
-            price: 250,
-            description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste.",
-            quantity: 3,
-            totalPrice: 750
-        }
-    ]);
+    const cart = useSelector((globalState) => globalState.cart.cart);
 
     const toggleCart = () => setIsOpen((prev) => !prev);
     const closeCart = () => setIsOpen(false);
@@ -113,3 +78,23 @@ const CartContainer = () => {
 }
 
 export default CartContainer
+
+//cart dummy data
+// {
+//     image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
+//     name: "Chicken Mandhi Spicy",
+//     rating: 4.5,
+//     price: 200,
+//     description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices",
+//     quantity: 2,
+//     totalPrice: 400
+// },
+// {
+//     image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
+//     name: "Al Faham Mandi Quarter",
+//     rating: 3.5,
+//     price: 250,
+//     description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste.",
+//     quantity: 3,
+//     totalPrice: 750
+// }

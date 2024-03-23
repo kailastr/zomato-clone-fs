@@ -6,6 +6,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFood } from '../../redux/reducers/food/food.action';
 import { getImage } from '../../redux/reducers/image/image.action';
+import { addToCart } from '../../redux/reducers/cart/cart.action';
 
 const FoodItem = (props) => {
 
@@ -13,16 +14,31 @@ const FoodItem = (props) => {
 
     const dispatch = useDispatch();
 
+    const cart = useSelector((globalState) => globalState.cart.cart);
+
     useEffect(() => {
-        dispatch(getFood(props._id)).then((data) => {
-            setFood(data.payload.food);
-            dispatch(getImage(data.payload.food.photos)).then(data => {
-                const { images } = data.payload;
-                images.length &&
-                    setFood((prev) => ({ ...prev, image: images[0].location }))
+        dispatch(getFood(props._id))
+            .then((data) => {
+                setFood(data.payload.food);
+                dispatch(getImage(data.payload.food.photos)).then(data => {
+                    const { images } = data.payload;
+                    images.length &&
+                        setFood((prev) => ({ ...prev, image: images[0].location }))
+                });
+                return data.payload.food
+            }).then((data) => {
+                cart.forEach((each) => {
+                    if (each._id === data._id) {
+                        setFood((prev) => ({ ...prev, isAddedToCart: true }));
+                    }
+                });
             })
-        });
-    }, []);
+    }, [cart]);
+
+    const addFoodToCart = () => {
+        dispatch(addToCart({ ...food, quantity: 1, totalPrice: food.price }));
+        setFood((prev) => ({ ...prev, isAddedToCart: true }));
+    };
 
     return (
         <>
@@ -48,13 +64,21 @@ const FoodItem = (props) => {
                             </button>
                         </div>
                         <div className='hidden md:block w-2/12'>
-                            <button className='flex items-center gap-2 text-zomato-400 bg-zomato-50 hover:bg-zomato-100 transition duration-200 ease-in-out border-zomato-400 px-2 py-1 rounded-lg'>
-                                <AiOutlinePlus /> Add
+                            <button
+                                className='flex items-center gap-2 text-zomato-400 bg-zomato-50 hover:bg-zomato-100 transition duration-200 ease-in-out border-zomato-400 px-2 py-1 rounded-lg'
+                                disabled={food?.isAddedToCart}
+                                onClick={addFoodToCart}
+                            >
+                                {food.isAddedToCart ?
+                                    ("Added")
+                                    :
+                                    (<><AiOutlinePlus /> Add</>)
+                                }
                             </button>
                         </div>
                     </div>
                 )}
-            </div>
+            </div >
         </>
     )
 }
