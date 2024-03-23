@@ -8,10 +8,11 @@ import restaurant from './restaurant/restaurant.reducer';
 import image from './image/image.reducer';
 import review from './review/review.reducer';
 import food from './food/food.reducer';
+import cart from './cart/cart.reducer';
 
 //reducers or storage units
 const rootReducer = combineReducers({
-    auth, user, restaurant, image, review, food
+    auth, user, restaurant, image, review, food, cart
 });
 
 export default rootReducer;
