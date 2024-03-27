@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa';
 import { HiLocationMarker } from 'react-icons/hi';
 import { IoMdArrowDropdown } from 'react-icons/io';
@@ -40,11 +40,13 @@ const MobileNavbar = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp 
         <>
             <div className='container flex w-full items-center justify-between lg:hidden m-auto py-5'>
                 <div className='w-28'>
-                    <img
-                        src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
-                        alt="Zomato Logo"
-                        className='w-full h-full'
-                    />
+                    <Link to={'/'}>
+                        <img
+                            src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
+                            alt="Zomato Logo"
+                            className='w-full h-full'
+                        />
+                    </Link>
                 </div>
                 <div className='flex items-center gap-3 relative'>
                     <button className='bg-zomato-400 text-white py-2 px-3 rounded-full'>
@@ -126,11 +128,13 @@ const LargeNav = ({ user, setIsDropdownOpen, IsDropdownOpen, signIn, signUp }) =
             <div className='container w-full items-center justify-between hidden lg:flex m-auto py-2 px-14'>
                 <div className='gap-4 items-center justify-around flex'>
                     <div className='w-20'>
-                        <img
-                            src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
-                            alt="Zomato Logo"
-                            className='w-full h-full'
-                        />
+                        <Link to={'/'}>
+                            <img
+                                src="https://b.zmtcdn.com/web_assets/b40b97e677bc7b2ca77c58c61db266fe1603954218.png"
+                                alt="Zomato Logo"
+                                className='w-full h-full'
+                            />
+                        </Link>
                     </div>
                 </div>
                 <div className='w-3/4 bg-white shadow-md p-3 flex items-center gap-3 border border-gray-200 rounded-2xl'>

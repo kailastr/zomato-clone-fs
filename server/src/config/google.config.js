@@ -9,7 +9,7 @@ export default (passport) => {
         new GoogleStrategy({
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: 'http://localhost:4000/auth/google/callback'
+            callbackURL: `${process.env.REACT_APP_CLIENT_URL}auth/google/callback`
         },
 
             //if a user successfully sign Up then the below async callback funciton is called

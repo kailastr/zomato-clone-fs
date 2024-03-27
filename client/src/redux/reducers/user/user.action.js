@@ -22,7 +22,7 @@ export const getMySelf = () => async (dispatch) => {
     try {
         const User = await axios({
             method: "GET",
-            url: 'http://localhost:4000/user/'
+            url: `${process.env.REACT_APP_CLIENT_URL}user/`
         });
 
         return dispatch({ type: SELF, payload: { ...User.data.user } });

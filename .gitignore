@@ -8,3 +8,4 @@
 # an error may occur in src/api/auth/index.js - /google/callback
 
 /client/package-lock.json
+/client/.env

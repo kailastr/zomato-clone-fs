@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BsShieldLockFill } from 'react-icons/bs';
 
 //import layout
@@ -8,28 +8,15 @@ import CheckoutLayout from '../layouts/Checkout.layout';
 import FoodItem from '../components/Cart/FoodItem';
 import AddressList from "../components/Checkout/AddressList";
 
+//redux
+import { useSelector } from "react-redux";
+
+
 const Checkout = () => {
 
-    const [cart, setCart] = useState([
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/44f/bc817ecae2106a8afad4d6f22be7c44f.jpg",
-            name: "Chicken Mandhi Spicy",
-            rating: 4.5,
-            price: 200,
-            description: "Chicken mandhi spicy is a flavourful Saudi Arabian rice dish made with tender chicken marinated in aromatic spices",
-            quantity: 2,
-            totalPrice: 400
-        },
-        {
-            image: "https://b.zmtcdn.com/data/dish_photos/5f3/426d684ea6b0f7edc2cd44119a0e55f3.jpg",
-            name: "Al Faham Mandi Quarter",
-            rating: 3.5,
-            price: 250,
-            description: "Chicken slow cooked in a fiery blend of chilli powder, coriander powder and a freshly-ground red chilli paste.",
-            quantity: 3,
-            totalPrice: 750
-        }
-    ]);
+    const cart = useSelector((globalState) => globalState.cart.cart);
+    const user = useSelector((globalState) => globalState?.user);
+    console.log(user);
 
     const address = [
         {
@@ -52,11 +39,11 @@ const Checkout = () => {
             description: "Fast Delivery Service",
             handler: (data) => {
                 alert("Payment Successfull");
-                console.log(data);
+                // console.log(data);
             },
             prefill: {
-                name: "Test User Name",
-                email: "test123@gmail.com"
+                name: user.fullName,
+                email: user.email
             },
             theme: {
                 color: "#e23744"
