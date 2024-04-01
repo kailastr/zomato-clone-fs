@@ -9,3 +9,7 @@
 
 /client/package-lock.json
 /client/.env
+
+# docker
+/client/Dockerfile
+/server/Dockerfile
