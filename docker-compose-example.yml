@@ -1,0 +1,39 @@
+#  this file is to merge all sub docker files
+version: '3'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3080:80"
+    depends_on:
+      - nodeserver
+      - client
+  nodeserver:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./server
+    volumes:
+      - /app.node_modules
+      - ./server:/app
+    environment:
+      - MONGO_URL=
+      - JWTSECRET=
+      - AWS_S3_ACCESS_KEY=
+      - AWS_S3_SECRET_KEY=
+      - GOOGLE_CLIENT_ID=
+      - GOOGLE_CLIENT_SECRET=
+    ports:
+      - "4000:4000"
+  client: 
+    build: 
+      dockerfile: dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+    ports:
+      - "3000:3000"
